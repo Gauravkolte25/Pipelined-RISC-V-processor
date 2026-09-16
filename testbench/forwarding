@@ -1,0 +1,87 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09/01/2026 12:34:40 PM
+// Design Name: 
+// Module Name: progmem
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module progmem (
+    input wire clock,
+    input  wire [15:0] address,
+    output wire [31:0] output_data
+);
+
+    reg [31:0] memory [0:255];
+    integer i;
+
+    initial begin
+    // Initialize memory with NOPs
+    for (i = 0; i < 256; i = i + 1) memory[i] = 32'h00000013;
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09/01/2026 12:34:40 PM
+// Design Name: 
+// Module Name: progmem
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module progmem (
+    input wire clock,
+    input  wire [15:0] address,
+    output wire [31:0] output_data
+);
+
+    reg [31:0] memory [0:255];
+    integer i;
+
+    initial begin
+    // Initialize memory with NOPs
+    for (i = 0; i < 256; i = i + 1) memory[i] = 32'h00000013;
+
+
+memory[0] = 32'h00500093; // 0x00: addi x1, x0, 5     -> Writes 5 to x1
+    memory[1] = 32'h00a00113; // 0x04: addi x2, x0, 10    -> Writes 10 to x2
+    memory[2] = 32'h002081b3; // 0x08: add  x3, x1, x2    -> EX Hazard! Reads x1 (EX/MEM) & x2 (ID/EX) -> Result 15
+    memory[3] = 32'h00308233; // 0x0C: add  x4, x1, x3    -> MEM Hazard! Reads x3 (EX/MEM) & x1 (MEM/WB) -> Result 20
+    memory[4] = 32'h00000013; // 0x10: NOP
+    memory[5] = 32'h00000013; // 0x14: NOP
+    memory[6] = 32'h00000013; // 0x18: NOP
+end
+
+    // Word-indexed lookup
+    assign output_data = memory[address];
+
+endmodule 
+
+    // Word-indexed lookup
+    assign output_data = memory[address];
+
+endmodule 
