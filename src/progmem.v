@@ -38,9 +38,9 @@ memory[1] = 32'h00500113; // 0x04: addi x2, x0, 5
 memory[2] = 32'h00208a63; // 0x08: beq  x1, x2, 20 (Target = 0x08 + 20 = 0x1C)
 memory[3] = 32'h00100f13; // 0x0C: addi x30, x0, 1
 memory[4] = 32'h00200f93; // 0x10: addi x31, x0, 2
-memory[7] = 32'h00100f13; // 0x0C: addi x30, x0, 1
-memory[8] = 32'h00a00f93; // 0x1C: addi x31, x0, 10 (Target)
-memory[9] = 32'h00000013; // 0x20: NOP
+memory[7] = 32'h00100f13; // 0x1C: addi x30, x0, 1
+memory[8] = 32'h00a00f93; //  addi x31, x0, 10 (Target)
+memory[9] = 32'h00000013; //  NOP
 end
 
     // Word-indexed lookup
