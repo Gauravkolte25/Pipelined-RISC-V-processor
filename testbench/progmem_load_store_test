@@ -1,0 +1,46 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 09/01/2026 12:34:40 PM
+// Design Name: 
+// Module Name: progmem
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module progmem (
+    input wire clock,
+    input  wire [15:0] address,
+    output wire [31:0] output_data
+);
+
+    reg [31:0] memory [0:255];
+    integer i;
+
+    initial begin
+    // Initialize memory with NOPs
+    for (i = 0; i < 256; i = i + 1) memory[i] = 32'h00000013;
+
+memory[0] = 32'h01000093; // 0x00: addi x1, x0, 16   (x1 = 16)
+memory[1] = 32'h02a00113; // 0x04: addi x2, x0, 42   (x2 = 42)
+memory[2] = 32'h0020a223; // 0x08: sw   x2, 4(x1)    (Store 42 at Mem[20])
+memory[3] = 32'h0040af03; // 0x0c: lw   x30, 4(x1)   (Load Mem[20] into x30 via MEM mux path)
+memory[4] = 32'h06300f93; // 0x10: addi x31, x0, 99   (x31 = 99 via ALU mux path)
+memory[5] = 32'h00000013; // 0x14: NOP
+end
+
+    // Word-indexed lookup
+    assign output_data = memory[address];
+
+endmodule 
